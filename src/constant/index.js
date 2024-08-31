@@ -38,7 +38,10 @@ const blueText = {
     fontWeight: "600",
 }
 
-const API_URL='https://mental-health-mahadev.glitch.me/api'
+// const API_URL='https://mental-health-mahadev.glitch.me/api'
+
+const API_URL='https://innathon.onrender.com/api'
+
 const API_URL_AIML='http://127.0.0.1:8000/'
 
 

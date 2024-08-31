@@ -54,7 +54,7 @@ async function Signup(username, email, password) {
             }
         }).catch((err) => {
             reject(err)
-            console.log(err.response.data);
+            console.log(err.data);
         })
     })
 }
@@ -92,15 +92,15 @@ async function VerifyToken(email, token) {
     })
 }
 
-async function ProfileComplete(bloodGroup, age, gender,phone) {
+async function ProfileComplete(bloodGroup, age, gender, phone) {
     console.log('in profile');
     const token = await AsyncStorage.getItem("userToken");
     const body = {
         bloodgroup: gender,
         age: age,
         gender: bloodGroup,
-        number:phone
-    } 
+        number: phone
+    }
     const config = {
         headers: {
             'auth-token': token,
@@ -109,7 +109,7 @@ async function ProfileComplete(bloodGroup, age, gender,phone) {
     return new Promise((resolve, reject) => {
 
         console.log(token);
-        axios.post(`${API_URL}/user/updateuser`,body,config
+        axios.post(`${API_URL}/user/updateuser`, body, config
         ).then(async (response) => {
             try {
                 // await setAuthAsyncStorage(response)
@@ -127,15 +127,15 @@ async function ProfileComplete(bloodGroup, age, gender,phone) {
     })
 }
 
-async function OlddiseaseForm(deases, from, consultation,isrecovered) {
+async function OlddiseaseForm(deases, from, consultation, isrecovered) {
     console.log('in OLDDISEASE');
     const token = await AsyncStorage.getItem("userToken");
     const body = {
-        deases:"AB",
-        from:"10",
-        consultation:"10",
-        isrecovered:"male"
-      }
+        deases: "AB",
+        from: "10",
+        consultation: "10",
+        isrecovered: "male"
+    }
     const config = {
         headers: {
             'auth-token': token,
@@ -143,7 +143,7 @@ async function OlddiseaseForm(deases, from, consultation,isrecovered) {
     }
     return new Promise((resolve, reject) => {
         console.log(token);
-        axios.post(`${API_URL}/user/updateuserdeases`,body,config
+        axios.post(`${API_URL}/user/updateuserdeases`, body, config
         ).then(async (response) => {
             try {
                 // await setAuthAsyncStorage(response)
@@ -161,6 +161,67 @@ async function OlddiseaseForm(deases, from, consultation,isrecovered) {
     })
 }
 
+async function BasicInfoForm(age, gender, maritalStatus, profession, about) {
+    const token = await AsyncStorage.getItem("userToken");
+    const body = {
+        age: age,
+        gender: gender,
+        maritalstatus: maritalStatus,
+        profession: profession,
+        about: about
+    }
+    const config = {
+        headers: {
+            'auth-token': token,
+        }
+    }
+    return new Promise((resolve, reject) => {
+        axios.post(`${API_URL}/user/addinfo`, body, config
+        ).then(async (response) => {
+            try {
+                // await setAuthAsyncStorage(response)
+                console.log(response.data);
+                resolve(response)
+                navigate('SuccesfullRegistration')
+            } catch (err) {
+                console.log();
+                reject(e)
+            }
+        }).catch((err) => {
+            console.log(err.response.data);
+            reject(err)
+        })
+    })
+}
+
+async function RoutineSurvey(mood, feel) {
+    const token = await AsyncStorage.getItem("userToken");
+    const body = {
+        mood: mood,
+        feelsnow: feel
+    }
+    const config = {
+        headers: {
+            'auth-token': token,
+        }
+    }
+    return new Promise((resolve, reject) => {
+        axios.post(`${API_URL}/user/routine`, body, config
+        ).then(async (response) => {
+            try {
+                // await setAuthAsyncStorage(response)
+                console.log(response.data);
+                resolve(response)
+            } catch (err) {
+                console.log();
+                reject(e)
+            }
+        }).catch((err) => {
+            console.log(err.response.data);
+            reject(err)
+        })
+    })
+}
 export const userServices = {
-    Logout, Login, Signup, ForgotPassword, VerifyToken, ProfileComplete,OlddiseaseForm
+    Logout, Login, Signup, ForgotPassword, VerifyToken, ProfileComplete, OlddiseaseForm, BasicInfoForm, RoutineSurvey
 }

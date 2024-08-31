@@ -13,6 +13,9 @@ export default function App({ navigation }) {
         navigation.navigate("BottomTab")
         :
         navigation.navigate("GetStarted")
+        
+      await AsyncStorage.setItem("isRoutineSurveyGiven", "false");
+
     }, 4000);
   }, [])
 

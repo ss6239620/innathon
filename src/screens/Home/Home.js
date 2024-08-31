@@ -26,6 +26,8 @@ import LottieView from 'lottie-react-native'
 import { YoutubeHomeData } from '../../assets/data/YoutubeData'
 import YoutubeModal from '../../components/Modal/YoutubeModal'
 import BlogScreenModal from '../../components/Modal/BlogScreenModal'
+import RoutineSurveyModal from '../../components/Modal/RoutineSurveyModal'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const data = [
   {
@@ -83,6 +85,7 @@ export default function Home({ navigation }) {
   const [score, setScore] = useState(0);
   const [isBatchLoading, setisBatchLoading] = useState(true)
   const [blogScreenModal, setBlogScreenModal] = useState(false)
+  const [routineSurveyModal, setroutineSurveyModal] = useState(false);
   const [ModalData, setBlogModalData] = useState({
     title: '',
     desc: '',
@@ -121,6 +124,18 @@ export default function Home({ navigation }) {
     const level = levels.findIndex(level => score < level.threshold);
     setCurrentLevel(level === -1 ? levels.length - 1 : level); // If userScore exceeds the highest threshold, set to the last level
   }, [score]);
+
+  useEffect(() => {
+    getSurveyModal()
+  }, [])
+
+  async function getSurveyModal(params) {
+    const isSurveyGiven = await AsyncStorage.getItem('isRoutineSurveyGiven')
+    if(isSurveyGiven==='false'){
+      setroutineSurveyModal(true);
+      await AsyncStorage.setItem('isRoutineSurveyGiven',"true")
+    }
+  }
 
 
   return (
@@ -212,6 +227,9 @@ export default function Home({ navigation }) {
               ?
               <BlogScreenModal modalVisible={blogScreenModal} setModalVisible={setBlogScreenModal} ModalData={ModalData} />
               : null
+          }
+          {
+            routineSurveyModal ? <RoutineSurveyModal modalVisible={routineSurveyModal} setModalVisible={setroutineSurveyModal} /> : null
           }
         </>
         <View style={{ width: "90%", flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>

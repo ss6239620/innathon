@@ -1,11 +1,15 @@
 import React from 'react';
 import { View, Text, StyleSheet, Modal, Pressable, Alert, TouchableOpacity } from 'react-native';
 import { blackText, blueText, colorTheme, grayText } from '../../constant';
-import Header from '../../components/Header';
-import UnderLine from '../../components/UnderLine';
+import { navigate } from '../../services/navRef';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const App = ({ modalVisible, setModalVisible }) => {
     // const [close, setclose] = useState(second)
+    async function handleLogout(params) {
+        await AsyncStorage.removeItem("userToken")
+        navigate('GetStarted')
+    }
     return (
         <Modal
             animationType="fade"
@@ -16,7 +20,7 @@ const App = ({ modalVisible, setModalVisible }) => {
                 setModalVisible(!modalVisible);
             }}>
             <View style={styles.centeredView}>
-                <Pressable style={styles.backdrop} onPress={()=>{setModalVisible(false)}}/>
+                <Pressable style={styles.backdrop} onPress={() => { setModalVisible(false) }} />
                 <View style={{ backgroundColor: 'rgba(52, 52, 52, 0.8)' }}>
                     <View style={styles.modalView}>
                         <View style={{ borderColor: colorTheme.borderColor, borderWidth: 2, width: '40%', borderRadius: 40, alignSelf: 'center' }} />
@@ -25,10 +29,12 @@ const App = ({ modalVisible, setModalVisible }) => {
                         <Text style={[styles.smallText, { fontWeight: 'bold', textAlign: 'center' }]}>Are you sure you want to log out?</Text>
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 20, marginTop: 20 }}>
                             <TouchableOpacity style={{ backgroundColor: "white", borderWidth: 1, borderColor: colorTheme.primaryColor, borderRadius: 50 }}>
-                                <Text style={[styles.blueText, { paddingHorizontal: 45, paddingVertical: 10 }]}>Cancel</Text>
+                                <Text style={[styles.blueText, { paddingHorizontal: 45, paddingVertical: 10,color:"gray" }]}>Cancel</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity style={{  backgroundColor: colorTheme.primaryColor, borderRadius: 50 }}>
-                                <Text style={[styles.blueText, { color:"white",paddingHorizontal: 30, paddingVertical: 10 }]}>Yes,Logout</Text>
+                            <TouchableOpacity
+                                onPress={handleLogout}
+                                style={{ backgroundColor: colorTheme.primaryColor, borderRadius: 50 }}>
+                                <Text style={[styles.blueText, { color: "white", paddingHorizontal: 30, paddingVertical: 10 }]}>Yes,Logout</Text>
                             </TouchableOpacity>
                         </View>
                     </View>

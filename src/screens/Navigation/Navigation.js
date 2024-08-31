@@ -44,6 +44,7 @@ import ChatBot from '../Chat/ChatBot'
 import Survey from '../Survey/Survey'
 import HowYourDay from '../Survey/HowYourDay'
 import Helpless from '../Survey/Helpless'
+import BasicInfo from '../Authentication/BasicInfo'
 
 const Stack = createNativeStackNavigator()
 
@@ -53,6 +54,7 @@ export default function App() {
         <Stack.Screen name='Splash' component={Splash} options={{ headerShown: false }} />
         <Stack.Screen name='GetStarted' component={GetStarted} options={{ headerShown: false }} />
         <Stack.Screen name='SignUp' component={SignUp} options={{ headerShown: false }} />
+        <Stack.Screen name='BasicInfo' component={BasicInfo} options={{ headerShown: false }} />
         <Stack.Screen name='DoctorRegister' component={DoctorRegister} options={{ headerShown: false }} />
         <Stack.Screen name='Login' component={Login} options={{ headerShown: false }} />
         <Stack.Screen name='ForgetPassword' component={ForgetPassword} options={{ headerShown: false }} />

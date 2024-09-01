@@ -247,7 +247,7 @@ export default function Home({ navigation }) {
           <View
             style={{ width: 80, height: 32, backgroundColor: "white", justifyContent: "center", alignItems: "center", borderRadius: 50, flexDirection: 'row' }}>
             <MaterialIcons name="videocam" color={colorTheme.primaryColor} size={25} style={{ marginRight: 10 }} onPress={() => { navigation.navigate("VideoCall") }} />
-            <MaterialIcons name="notifications-active" color={colorTheme.primaryColor} size={25} style={{ marginRight: 10 }} onPress={() => setNotificationModal(true)} />
+            <MaterialIcons name="analytics" color={colorTheme.primaryColor} size={25} style={{ marginRight: 10 }} onPress={() => navigation.navigate('AppAnalysis')} />
             <FontAwesome name="pencil-square-o" color={colorTheme.primaryColor} size={25} style={{ marginRight: 10 }} onPress={() => setjournalModalModal(true)} />
           </View>
         </View>

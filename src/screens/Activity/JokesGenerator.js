@@ -1,5 +1,5 @@
 // App.js file 
-import React, { useState } from "react"; 
+import React, { useEffect, useState } from "react"; 
 import { 
 	View, 
 	Text, 
@@ -10,6 +10,11 @@ import {
 
 const App = () => { 
 	const [joke, setJoke] = useState(""); 
+
+	useEffect(() => {
+	  getJoke()
+	}, [])
+	
 
 	const getJoke = async () => { 
 		try { 

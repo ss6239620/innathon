@@ -4,7 +4,10 @@ import LottieView from 'lottie-react-native'
 import { colorTheme } from '../constant';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+
+
 export default function App({ navigation }) {
+
   useEffect(() => {
     setTimeout(async () => {
       const token = await AsyncStorage.getItem("userToken");
@@ -13,7 +16,7 @@ export default function App({ navigation }) {
         navigation.navigate("BottomTab")
         :
         navigation.navigate("GetStarted")
-        
+
       await AsyncStorage.setItem("isRoutineSurveyGiven", "false");
 
     }, 4000);

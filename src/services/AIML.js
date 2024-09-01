@@ -8,7 +8,7 @@ async function ChatBot(query) {
     }
 
     return new Promise((resolve, reject) => {
-        axios.post(`${API_URL_AIML}/postquestion/`, body)
+        axios.get(`https://gitagpt.org/api/ask/gita?q=${query}&email=7718833236&locale=en`)
             .then(async (response) => {
                 try {
                     // console.log(response.data);

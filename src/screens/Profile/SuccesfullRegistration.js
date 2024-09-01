@@ -3,15 +3,28 @@ import React, { useEffect } from 'react'
 import { colorTheme, blackText, blueText, grayText } from '../../constant'
 import LottieView from 'lottie-react-native'
 import { useNavigation } from '@react-navigation/native'
+import { userServices } from '../../services/userAuth'
 
 
 export default function SuccessFullRegistration() {
-    const navigation=useNavigation()
+    const navigation = useNavigation()
     useEffect(() => {
         setTimeout(() => {
-          navigation.navigate("BottomTab")
+            navigation.navigate("BottomTab")
         }, 1000);
-      }, [])
+    }, [])
+
+    useEffect(() => {
+     handleSubmit()
+    }, [])
+    
+
+
+    function handleSubmit() {
+        userServices.RoutineSurvey('Sad', 'I am feeling sad because i had bad day today.').then((res) => {
+            console.log(res.data);
+        })
+    }
     return (
         <View style={styles.container}>
             <LottieView

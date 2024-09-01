@@ -86,6 +86,7 @@ export default function Home({ navigation }) {
   const [isBatchLoading, setisBatchLoading] = useState(true)
   const [blogScreenModal, setBlogScreenModal] = useState(false)
   const [routineSurveyModal, setroutineSurveyModal] = useState(false);
+  const [username, setusername] = useState(null)
   const [ModalData, setBlogModalData] = useState({
     title: '',
     desc: '',
@@ -109,12 +110,21 @@ export default function Home({ navigation }) {
         setarticle(res.data.articles)
         setarticleLoading(true)
       }
-    )).catch(err => { console.log('error fetching data'); })
+    )).catch(err => { console.log('error fetching data1'); })
+
+    BlogServices.fetchUserName().then((res) => {
+      setusername(res.data.name)
+    })
 
     BlogServices.getScore().then(
       res => {
-        setScore(res.data[0].score)
-        setisBatchLoading(false)
+        if (res.data.length === 0) {
+          setScore(0)
+          setisBatchLoading(false)
+        } else {
+          setScore(res.data[0].score)
+          setisBatchLoading(false)
+        }
       }
     ).catch()
   }, [])
@@ -131,12 +141,11 @@ export default function Home({ navigation }) {
 
   async function getSurveyModal(params) {
     const isSurveyGiven = await AsyncStorage.getItem('isRoutineSurveyGiven')
-    if(isSurveyGiven==='false'){
+    if (isSurveyGiven === 'false') {
       setroutineSurveyModal(true);
-      await AsyncStorage.setItem('isRoutineSurveyGiven',"true")
+      await AsyncStorage.setItem('isRoutineSurveyGiven', "true")
     }
   }
-
 
   return (
     <View style={styles.container}>
@@ -234,14 +243,14 @@ export default function Home({ navigation }) {
         </>
         <View style={{ width: "90%", flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
           <View>
-            <Text style={{ color: "gray" }}>Location</Text>
             <Pressable
               style={{ flexDirection: "row", alignItems: 'center' }}
-              onPress={() => setModalVisible(true)}
+            // onPress={() => setModalVisible(true)}
             >
-              <MaterialIcons name="location-pin" color={colorTheme.primaryColor} size={25} />
-              <Text style={{ color: "black", fontSize: 15, fontWeight: "700" }}>New York,USA</Text>
-              <MaterialIcons name="keyboard-arrow-down" color={colorTheme.primaryColor} size={25} />
+              {/* <MaterialIcons name="location-pin" color={colorTheme.primaryColor} size={25} /> */}
+              {/* <Text style={{ color: "black", fontSize: 15, fontWeight: "700" }}>New York,USA</Text> */}
+              {/* <MaterialIcons name="keyboard-arrow-down" color={colorTheme.primaryColor} size={25} /> */}
+              {username && <Text style={{ color: "black", fontSize: 15, fontWeight: "700" }}>Hello {username}</Text>}
             </Pressable>
           </View>
           <View

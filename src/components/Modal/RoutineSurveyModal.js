@@ -3,12 +3,21 @@ import React, { useState } from 'react';
 import { blackText, blueText, colorTheme, grayText } from '../../constant';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { userServices } from '../../services/userAuth';
+import { BlogServices } from '../../services/BlogsServices';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const RoutineSurveyModal = ({ modalVisible, setModalVisible }) => {
     const [text, setText] = useState('');
     const [height, setHeight] = useState(0);
     const [selectedEmotion, setSelectedEmotion] = useState(null);
     const [emoji, setemoji] = useState('')
+
+    function fetchSenti(params) {
+        BlogServices.fetchmysentiments().then(async (res) => {
+          console.log(res.data);
+          await AsyncStorage.setItem('sentiment', res.data);
+        })
+      }
 
     const emotions = [
         { emoji: '😊', label: 'Happy' },
@@ -25,9 +34,9 @@ const RoutineSurveyModal = ({ modalVisible, setModalVisible }) => {
 
     function handleSubmit() {
         userServices.RoutineSurvey(emoji, text).then(() => {
+            fetchSenti()
             setModalVisible(!modalVisible)
         })
-
     }
 
     return (

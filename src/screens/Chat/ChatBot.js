@@ -16,7 +16,9 @@ export default function Message() {
     const [openModal, setopenModal] = useState(false)
     const [language, setlanguage] = useState('en')
 
+
     function handleSpeakToggle(messageText) {
+        Tts.setDefaultVoice('hi-in-x-hie-network');
         if (isSpeaking) {
             Tts.stop();
             setIsSpeaking(false);

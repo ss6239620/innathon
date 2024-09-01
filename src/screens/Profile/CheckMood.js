@@ -23,6 +23,8 @@ export default function CheckMood() {
         )
     }, [])
 
+
+
     function handlePress(date, sentiment) {
         setchooseDate(date)
         setchooseSentiment(sentiment)

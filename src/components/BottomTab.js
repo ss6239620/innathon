@@ -50,7 +50,7 @@ export default function BottomTab() {
 
                 }}
             />
-            <Tab.Screen
+            {/* <Tab.Screen
                 name="Appointment"
                 component={Appointment}
                 options={{
@@ -72,7 +72,7 @@ export default function BottomTab() {
                     ),
 
                 }}
-            />
+            /> */}
             <Tab.Screen
                 name="Profile"
                 component={Profile}

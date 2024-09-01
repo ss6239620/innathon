@@ -6,6 +6,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import UnderLine from '../UnderLine';
 import AddJournalModal from './AddJournalModal'
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const JournalModal = ({ modalVisible, setModalVisible }) => {
     const [addJournal, setaddJournal] = useState(false)
@@ -13,7 +14,8 @@ const JournalModal = ({ modalVisible, setModalVisible }) => {
     const [isLoading, setisLoading] = useState(true)
 
     async function GetAllNotes() {
-        const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjVjYjg5YzdjMTA4YzE0NGU4MzZkMWYwIn0sImlhdCI6MTcwNzgzNzg5NX0.Ith6JQ1gJBthbo02HRbvNxUy95tbk7GNHXY2LaW6z6o'
+        const token = await AsyncStorage.getItem("userToken");
+
         const config = {
             headers: {
                 'auth-token': token,

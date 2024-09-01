@@ -3,17 +3,30 @@ import React, { useEffect } from 'react'
 import LottieView from 'lottie-react-native'
 import { colorTheme } from '../constant';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { BlogServices } from '../services/BlogsServices';
 
 
 
 export default function App({ navigation }) {
+
+  function fetchSenti(params) {
+    BlogServices.fetchmysentiments().then(async (res) => {
+      console.log(res.data);
+      await AsyncStorage.setItem('sentiment', res.data);
+    })
+  }
+
+  function handleAlreadyLogin(params) {
+    fetchSenti()
+    navigation.navigate("BottomTab")
+  }
 
   useEffect(() => {
     setTimeout(async () => {
       const token = await AsyncStorage.getItem("userToken");
       token
         ?
-        navigation.navigate("BottomTab")
+        handleAlreadyLogin()
         :
         navigation.navigate("GetStarted")
 

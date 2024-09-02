@@ -60,7 +60,7 @@ export default function BottomTab() {
                         <Fontisto name="date" size={size} color={color} />
                     )
                 }}
-            />
+            /> */}
             <Tab.Screen
                 name="Chat"
                 component={Chat}
@@ -72,7 +72,7 @@ export default function BottomTab() {
                     ),
 
                 }}
-            /> */}
+            />
             <Tab.Screen
                 name="Profile"
                 component={Profile}

@@ -28,6 +28,7 @@ import YoutubeModal from '../../components/Modal/YoutubeModal'
 import BlogScreenModal from '../../components/Modal/BlogScreenModal'
 import RoutineSurveyModal from '../../components/Modal/RoutineSurveyModal'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { getPlaylistByMood } from '../../services/SongsServices'
 
 const data = [
   {
@@ -146,6 +147,19 @@ export default function Home({ navigation }) {
       await AsyncStorage.setItem('isRoutineSurveyGiven', "true")
     }
   }
+
+  // async function handleClick() {
+  //   const moodFromStorage = await AsyncStorage.getItem('sentiment');
+  
+  //   const mood = moodFromStorage ? moodFromStorage.trim().toUpperCase() : null;
+
+  //   getPlaylistByMood(mood).then((res)=>{
+  //     console.log(res);
+  //   })
+    
+  // }
+  
+  
 
   return (
     <View style={styles.container}>
@@ -316,7 +330,7 @@ export default function Home({ navigation }) {
         </View>
         <View style={{ width: '90%', }}>
           <View style={{ flexDirection: "row", justifyContent: 'space-between', padding: 10 }}>
-            <Text style={[styles.grayText, { color: 'black' }]}>Your Todos...</Text>
+            <Text style={[styles.grayText, { color: 'black' }]} onPress={()=>navigation.navigate('MusicPlayer')}>Your Todos...</Text>
             <Text onPress={() => { setSeeAllTask(true) }} style={[{ color: colorTheme.primaryColor, fontSize: 15 }]}>See All Tasks</Text>
           </View>
           <View style={{ borderWidth: 1, borderColor: colorTheme.borderColor, borderRadius: 10 }}>

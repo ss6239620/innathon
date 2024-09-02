@@ -1,22 +1,29 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, Animated } from 'react-native';
-import { sampleWords } from '../../assets/data/WordGuessData';
+import {
+    View, Text, TextInput,
+    TouchableOpacity, StyleSheet, Alert
+} from 'react-native';
+import { sampleWords } from '../../assets/data/WordGuessData'
+
 
 const getRandomWord = () => {
-    const randomPlace = Math.floor(Math.random() * sampleWords.length);
+    const randomPlace =
+        Math.floor(Math.random() * sampleWords.length);
     return sampleWords[randomPlace];
 };
 
 const GFGWordGame = () => {
-    const [wordData, setWordData] = useState(getRandomWord());
+    const [wordData, setWordData] =
+        useState(getRandomWord());
     const [msg, setMsg] = useState('');
     const [inputText, setInputText] = useState('');
     const [hints, setHints] = useState(3);
-    const [displayWord, setDisplayWord] = useState(false);
-    const [animation] = useState(new Animated.Value(0));
+    const [displayWord, setDisplayWord] =
+        useState(false);
 
     const checkWordGuessedFunction = () => {
-        return inputText.toLowerCase() === wordData.word.toLowerCase();
+        return inputText.toLowerCase() ===
+            wordData.word.toLowerCase();
     };
 
     const useHint = () => {
@@ -24,27 +31,26 @@ const GFGWordGame = () => {
             const hiddenLetterIndex = wordData.word
                 .split('')
                 .findIndex(
-                    (letter, index) =>
+                    (letter) =>
                         letter !== ' ' &&
-                        inputText[index] !== letter);
-            if (hiddenLetterIndex !== -1) {
-                const updatedText =
-                    inputText.slice(0, hiddenLetterIndex) +
-                    wordData.word[hiddenLetterIndex] +
-                    inputText.slice(hiddenLetterIndex + 1);
-                setHints(hints - 1);
-                setInputText(updatedText);
-            }
+                        inputText[hiddenLetterIndex] !==
+                        letter);
+            const updatedText =
+                inputText.slice(0, hiddenLetterIndex) +
+                wordData.word[hiddenLetterIndex] +
+                inputText.slice(hiddenLetterIndex + 1);
+            setHints(hints - 1);
+            setInputText(updatedText);
         }
     };
 
     const showResult = () => {
         if (checkWordGuessedFunction()) {
-            setMsg(`Congratulations! You guessed the word correctly!`);
+            setMsg(`Congratulations! You guessed 
+			the word correctly!`);
         } else {
             setMsg('You made a Wrong Guess. Try again!');
             setDisplayWord(true);
-            startAnimation();
         }
     };
 
@@ -56,37 +62,24 @@ const GFGWordGame = () => {
         setDisplayWord(false);
     };
 
-    const startAnimation = () => {
-        Animated.sequence([
-            Animated.timing(animation, {
-                toValue: 1,
-                duration: 500,
-                useNativeDriver: true
-            }),
-            Animated.timing(animation, {
-                toValue: 0,
-                duration: 500,
-                useNativeDriver: true
-            })
-        ]).start();
-    };
-
     useEffect(() => {
         if (displayWord) {
             showResult();
         }
-    }, [displayWord]);
-
-    const animatedStyle = {
-        opacity: animation,
-    };
+    });
 
     return (
         <View style={styles.container}>
-            <Text style={styles.heading}>Word Guess Game</Text>
-            <Text style={styles.wordDescription}>Hint: {wordData.description}</Text>
+            <Text style={styles.heading}>
+                Word Guess Game
+            </Text>
+            <Text style={styles.wordDescription}>
+                Hint: {wordData.description}
+            </Text>
             <View style={styles.hints}>
-                <Text style={styles.hintText}>Hints Remaining: {hints}</Text>
+                <Text style={styles.hintText}>
+                    Hints Remaining: {hints}
+                </Text>
             </View>
             <TextInput
                 style={styles.input}
@@ -94,33 +87,37 @@ const GFGWordGame = () => {
                 onChangeText={(text) => setInputText(text)}
                 placeholder="Enter your guess"
                 editable={!displayWord}
-                autoCapitalize="none"
-                autoCorrect={false}
             />
             <View style={styles.buttonSection}>
-                <TouchableOpacity
-                    onPress={useHint}
+                <TouchableOpacity onPress={useHint}
                     disabled={hints === 0 || displayWord}
-                    style={[styles.button, styles.hintButton]}>
-                    <Text style={styles.buttonText}>Use Hint</Text>
+                    style={styles.hintButton}>
+                    <Text style={styles.hintButtonText}>Use Hint</Text>
                 </TouchableOpacity>
-                <TouchableOpacity
-                    onPress={showResult}
-                    style={[styles.button, styles.showResultButton]}
+                <TouchableOpacity onPress={showResult}
+                    style={styles.showResultButton}
                     disabled={displayWord}>
-                    <Text style={styles.buttonText}>Show Result</Text>
+                    <Text style={styles.buttonText}>
+                        Show Result
+                    </Text>
                 </TouchableOpacity>
-                <TouchableOpacity
-                    onPress={restartGameFunction}
-                    style={[styles.button, styles.restartButton]}>
-                    <Text style={styles.buttonText}>Restart</Text>
+                <TouchableOpacity onPress={restartGameFunction}
+                    style={styles.restartButton}>
+                    <Text style={styles.buttonText}>
+                        Restart
+                    </Text>
                 </TouchableOpacity>
             </View>
             {msg && (
-                <Animated.View style={[styles.message, animatedStyle]}>
-                    <Text style={styles.messageText}>{msg}</Text>
-                    {displayWord && <Text style={styles.correctWord}>Correct word was: {wordData.word}</Text>}
-                </Animated.View>
+                <View style={styles.message}>
+                    <Text style={styles.messageText}>
+                        {msg}
+                    </Text>
+                    {displayWord &&
+                        <Text>
+                            Correct word was: {wordData.word}
+                        </Text>}
+                </View>
             )}
         </View>
     );
@@ -134,45 +131,49 @@ const styles = StyleSheet.create({
         backgroundColor: '#f0f0f0',
         padding: 16,
     },
-    heading: {
+    appName: {
         fontSize: 24,
         fontWeight: 'bold',
+        color: 'green',
+    },
+    heading: {
+        fontSize: 20,
+        fontWeight: 'bold',
         marginBottom: 16,
-        color: '#333',
     },
     wordDescription: {
-        fontSize: 16,
-        marginVertical: 16,
-        color: '#666',
+        marginTop: 16,
+        marginBottom: 16,
     },
     hints: {
-        marginVertical: 16,
+        marginTop: 16,
+        marginBottom: 16,
     },
     hintText: {
         fontSize: 16,
-        color: '#444',
-    },
-    buttonSection: {
-        flexDirection: 'row',
-        marginVertical: 16,
-    },
-    button: {
-        padding: 10,
-        borderRadius: 5,
-        marginHorizontal: 5,
     },
     hintButton: {
+        padding: 10,
         backgroundColor: 'orange',
+        borderRadius: 5,
+    },
+    hintButtonText: {
+        color: 'white',
     },
     showResultButton: {
+        padding: 10,
         backgroundColor: 'green',
+        borderRadius: 5,
+        marginRight: 10,
+        marginLeft: 10,
     },
     restartButton: {
+        padding: 10,
         backgroundColor: 'red',
+        borderRadius: 5,
     },
     buttonText: {
         color: 'white',
-        fontSize: 16,
     },
     message: {
         marginTop: 16,
@@ -181,22 +182,18 @@ const styles = StyleSheet.create({
     messageText: {
         fontSize: 18,
         fontWeight: 'bold',
-        color: '#333',
-    },
-    correctWord: {
-        marginTop: 8,
-        fontSize: 16,
-        color: '#555',
     },
     input: {
         width: '80%',
         height: 40,
         borderWidth: 1,
-        borderColor: '#ccc',
+        borderColor: 'black',
         marginBottom: 16,
         paddingLeft: 8,
-        borderRadius: 5,
-        backgroundColor: 'white',
+    },
+    buttonSection: {
+        flexDirection: 'row',
+        marginTop: 16,
     },
 });
 
